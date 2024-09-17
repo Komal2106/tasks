@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks Manual</title>
+    <style>
+
+       .innerLayout{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: auto;
+        align-items: center;
+        text-align: center;
+        width: 70%;
+        border: 0.5px dotted steelblue;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      
+       }
+
+       .layout{
+        margin-top:20px ;
+        align-items: center;
+       }
+
+       #Html_form{
+        text-align: center;
+       }
+
+       #links,h1{
+        text-align: center;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+       }
+
+       a{
+        text-decoration: none;
+       }
+       body{
+        background-color:rgb(234, 233, 233)
+       }
+
+      
+
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <div id ="links">
+    <a href = "/">All tasks | </a>
+    <a href = "/completed-tasks"> Completed Tasks  </a>
+</div>
+    <div class = "layout">
+        <%for(let i = 0; i<Tasks.length; i++){%>
+            <div class="innerLayout">
+                <p>Id: <%=Tasks[i].Id%> </p>
+                <p>Name: <%if(Tasks[i].isCompleted === true){%>
+                            <s><%=Tasks[i].Name%></s>
+                <%}else{%>
+                    
+                    <%=Tasks[i].Name%> 
+                <%}%>
+                </p>
+                
+                <form action="/update-task/<%=Tasks[i].Id%>" method = "POST">
+                
+                    <input type ="checkbox" name="isCompleted" <%= Tasks[i].isCompleted ? 'checked' : 'notchecked' %>>
+                    <label>
+                        <button>Update</button>
+                    </label>
+                </form>
+            </div>
+        <%}%>
+    </div>  
+    <h1>Add a Task</h1>
+    <form action="/add-task" method="POST" id="Html_form">
+        <label>Task Name</label>
+        <input type = "text" name = "Name">
+        <button type ="submit">Add Task</button>
+    </form>
+
+
+</body>
+</html>
